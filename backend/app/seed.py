@@ -38,5 +38,12 @@ def init_db():
             ],
         )
         conn.execute("INSERT INTO settings(key,value) VALUES ('unit','roll')")
+        default_roll_id = conn.execute(
+            "SELECT id FROM rolls WHERE name='素色53'"
+        ).fetchone()["id"]
+        conn.execute(
+            "INSERT INTO settings(key,value) VALUES ('default_roll_id',?)",
+            (str(default_roll_id),),
+        )
         conn.commit()
     conn.close()
